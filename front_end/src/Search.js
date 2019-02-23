@@ -8,7 +8,8 @@ class Search extends Component {
         this.state={
             firstLoad: true,
             loadingImage: false,
-            selectedImage: false,
+            selectedImage: placeholder,
+            imageFile: null,
             ingredients: [],
         };
     }
@@ -17,8 +18,10 @@ class Search extends Component {
         if(this.state.firstLoad) {
             return(
                 <div>
-                    <input type="file"></input>
-                    <img src= {placeholder} alt="Default placeholder for ingredients."></img>
+                    <h1>Add an Ingredient</h1> 
+                    <input type="file" onChange ={(e) => this.handleFile(e)}></input>
+                    {/*https://countrylakesdental.com/wp-content/uploads/2016/10/orionthemes-placeholder-image.jpg*/}
+                    <img src= {this.state.selectedImage} alt="Uploaded Ingredient" className="ingredientImage"></img>
                     {/*title + upload + placeholder image*/}
                 </div>
             );
@@ -35,6 +38,17 @@ class Search extends Component {
                 </div>
             )
         }
+    }
+
+    /*With reference to https://codepen.io/hartzis/pen/VvNGZP*/
+    handleFile(e) {
+        let r = new FileReader();
+        let file = e.target.files[0];
+        this.setState({firstLoad: false, loadingImage: true});
+        r.onloadend = () => {
+            this.setState({selectedImage: r.result, imageFile: file});
+        }
+        r.readAsDataURL(file);
     }
 }
 export default Search
