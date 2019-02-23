@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const base_url = 'http://loclahost:5000/'
+const base_url = 'http://localhost:5000/'
 
 export function upload_photo(image) {
     return axios({
@@ -18,7 +18,7 @@ export function get_recipes(ingredients, page) {
     ingredients.forEach(element => {
         url += element + ','
     });
-    url = ingredients.substring(0, url.length - 1);
+    url = url.substring(0, url.length - 1);
     return axios({
         method: 'get',
         url: url

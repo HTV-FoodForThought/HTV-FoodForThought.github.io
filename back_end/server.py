@@ -1,7 +1,9 @@
 from flask import Flask, jsonify, request
 import VisionAPI
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 
 @app.route('/')
 def home():
@@ -22,7 +24,7 @@ def upload_photo():
         mimetype='application/json',
     )
 
-@app.route('/get_recipies', methods=['POST'])
+@app.route('/get_recipes', methods=['GET'])
 def get_recipes():
     list_of_ingredients = request.args.get('ingredients')
     page = request.args.get('page')
