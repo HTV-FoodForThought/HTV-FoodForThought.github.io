@@ -36,7 +36,13 @@ class Search extends Component {
                 {this.state.currImageIngredients}
                 <p>Selected Ingredients:</p>
                 {this.state.selectedIngredients}
-                <Link to="/recipes" state={{ingredients: this.selectedIngredients}}>Find Recipes</Link>
+                {console.log(this.state.selectedIngredients)}
+                <Link exact to={{
+                    pathname: "/recipes",
+                    state: {
+                        ingredients: this.state.selectedIngredients
+                    }
+                }}>Find recipes</Link>;
             </div>
         );
     }
@@ -67,9 +73,12 @@ class Search extends Component {
     }
 
     addIngredient(element) {
-        let copy = [...this.state.selectedIngredients]
-        copy.push(element)
-        this.setState({...this.state, selectedIngredients: copy})
+        if (this.state.selectedIngredients.includes(element)) {
+            return;
+        }
+        let copy = [...this.state.selectedIngredients];
+        copy.push(element);
+        this.setState({...this.state, selectedIngredients: copy});
     }
 }
 export default Search
