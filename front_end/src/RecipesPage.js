@@ -31,9 +31,11 @@ export default class RecipesPage extends Component {
                 responseJson.data.response.forEach(element => {
                     copy.push(
                         <ListItem button>
-                            <p>{element.title}</p>
-                            <img src={element.thumbnail}/>
-                            <p>Ingredients: {element.ingredients}</p>
+                            <a href={element.href} target='_blank'>
+                                <p>{element.title}</p>
+                                <img src={element.thumbnail}/>
+                                <p>Ingredients: {element.ingredients}</p>
+                            </a>
                         </ListItem>        
                     )
                 });

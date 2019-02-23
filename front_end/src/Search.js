@@ -57,7 +57,7 @@ class Search extends Component {
     }
 
     /*With reference to https://codepen.io/hartzis/pen/VvNGZP*/
-    handleFile(e) {
+    handleFile = (e) => {
         e.preventDefault();
         let r = new FileReader();
         let file = e.target.files[0];
@@ -65,18 +65,21 @@ class Search extends Component {
         r.onloadend = () => {
             this.setState({...this.state, selectedImage: r.result, imageFile: file});
         }
-        r.readAsDataURL(file);
+        // r.readAsDataURL(file);
+        console.log(file);
+        console.log(file.type)
         upload_photo(file).then((responseJson) => {
+            console.log(responseJson);
             let copy = [];
             responseJson.data.response.forEach(element => {
+                console.log(element);
                 copy.push(
                     <ListItem button>
                         <p>{element}</p>
                     </ListItem>
                 )
             });
-            this.setState({...this.state, currImageIngredients: copy.concat(responseJson.response)});
-            this.setState({...this.state, loadingImage: false});
+            this.setState({...this.state, currImageIngredients: copy, loadingImage: false});
         }) .catch((error) => {
             console.log(error);
         });

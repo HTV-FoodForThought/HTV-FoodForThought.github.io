@@ -3,7 +3,8 @@ import axios from 'axios';
 const base_url = 'http://localhost:5000/'
 
 export function upload_photo(image) {
-    console.log(typeof(image));
+    console.log(image.type);;
+    console.log(image);
     return axios({
         headers: {
             'Content-Type': image.type
@@ -11,7 +12,7 @@ export function upload_photo(image) {
         method: 'post',
         url: `${base_url}upload_photo`,
         data: {
-            image: image
+            'image': image
         }
     });
 }
