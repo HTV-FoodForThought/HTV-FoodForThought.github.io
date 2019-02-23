@@ -12,11 +12,3 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
-
-img {
-  border-radius: 50%;
-  width: 25%;
-  height: 50%;
-  padding-top: 5px;
-  padding-bottom: 10px;
-}
