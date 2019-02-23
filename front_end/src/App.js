@@ -12,7 +12,6 @@ class App extends Component {
          <header className="App-header">
            <Route exact path="/" component={Title}/>
            <Route exact path="/search" component={Search}/>
-           {this.props.children}
           </header>
         </div>
       </Router>

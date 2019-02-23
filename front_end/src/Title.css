@@ -1,8 +1,8 @@
-.App {
+.title {
   text-align: center;
 }
 
-.App-header {
+.title-header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -13,10 +13,10 @@
   color: white;
 }
 
-img {
+.title-image {
   border-radius: 50%;
-  width: 25%;
-  height: 50%;
+  width: 50%;
+  height: 75%;
   padding-top: 5px;
   padding-bottom: 10px;
 }
