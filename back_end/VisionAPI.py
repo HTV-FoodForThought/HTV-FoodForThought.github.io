@@ -42,20 +42,14 @@ def retrieve_labels(img_to_parse=None):
 
 def query_food_item_choices(food_items, page):
     """
-    (List[string], string) -> List[{string: string, ...:...}*10]
+    (string, string) -> List[{string: string, ...:...}*10]
 
-    Given a list of food items represented as a list of strings and a page number, return
-    a list of dictionaries where the keys are food properties and their values are...their values
+    Given a string of food items delimited by commas and a page number, return
+    a list of dictionaries where the keys are food properties and their values
+    are...their values
     """
-    recipe_puppy_url = 'http://www.recipepuppy.com/api/?i='
+    recipe_puppy_url = 'http://www.recipepuppy.com/api/?i=' + food_items + '&p=' + page
 
-    # Iterate through each food item and append it to the url that we will use to
-    # run our query on the food recipes
-    for food in food_items:
-        recipe_puppy_url += food
-        if not food_items.index(food) == len(food_items) - 1:
-            recipe_puppy_url += '&p=' + page
-    
     # Extract the JSON data from the page and return the results desired
     page_form = urllib.request.urlopen(recipe_puppy_url).read()
     data = json.loads(page_form.decode())
