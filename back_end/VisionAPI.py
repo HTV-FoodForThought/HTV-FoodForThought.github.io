@@ -40,7 +40,30 @@ def retrieve_labels(img_to_parse=None):
 
     return label_descriptions
 
-def query_food_item_choices(food_items, page):
+def retrieve_labels_and_detect_food(img_to_parse=None):
+    """
+    Similar to retrieve_labels, this method will only gather the items which are actually a food
+    """
+
+    if img_to_parse is not None:
+        image = types.Image(content=img_to_parse)
+
+        # Performs label detection on the image file
+        response = client.label_detection(image=image)
+        labels = response.label_annotations
+    else:
+        labels = []
+    
+    label_descriptions = []
+    for label in labels:
+        hits = query_food_item_choices(label.description)
+        if len(hits) != 0:
+            label_descriptions.append(label.description)
+            
+    return label_descriptions
+
+
+def query_food_item_choices(food_items, page=None):
     """
     (string, string) -> List[{string: string, ...:...}*10]
 
@@ -48,7 +71,10 @@ def query_food_item_choices(food_items, page):
     a list of dictionaries where the keys are food properties and their values
     are...their values
     """
-    recipe_puppy_url = 'http://www.recipepuppy.com/api/?i=' + food_items + '&p=' + page
+    if page is not None:
+        recipe_puppy_url = 'http://www.recipepuppy.com/api/?i=' + food_items + '&p=' + page
+    else:
+        recipe_puppy_url = 'http://www.recipepuppy.com/api/?i=' + food_items
 
     # Extract the JSON data from the page and return the results desired
     page_form = urllib.request.urlopen(recipe_puppy_url).read()
@@ -57,4 +83,4 @@ def query_food_item_choices(food_items, page):
     return data["results"]
 
 # if __name__=="__main__":
-#     query_food_item_choices(["apple", "orange"])
+#     print(query_food_item_choices("apple,orange", "1"))

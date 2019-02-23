@@ -15,7 +15,7 @@ def home():
 def upload_photo():
     img = request.files['image']
     # send img to google api and get results
-    options = VisionAPI.retrieve_labels(img)
+    options = VisionAPI.retrieve_labels_and_detect_food(img)
     return jsonify(
         response=options,
         status=200,
