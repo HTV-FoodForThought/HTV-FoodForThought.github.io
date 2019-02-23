@@ -4,8 +4,10 @@
   "homepage": "http://HTV-FoodForThought.github.io",
   "private": true,
   "dependencies": {
+    "axios": "^0.18.0",
     "gh-pages": "^2.0.1",
     "react": "^16.8.3",
+    "react-addons-css-transition-group": "^15.6.2",
     "react-dom": "^16.8.3",
     "react-scripts": "2.1.5"
   },
