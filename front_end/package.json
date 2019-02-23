@@ -4,6 +4,7 @@
   "homepage": "http://HTV-FoodForThought.github.io",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^3.9.2",
     "axios": "^0.18.0",
     "gh-pages": "^2.0.1",
     "react": "^16.8.3",

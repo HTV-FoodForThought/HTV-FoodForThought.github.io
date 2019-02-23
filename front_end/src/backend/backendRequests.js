@@ -13,8 +13,8 @@ export function upload_photo(image) {
 }
 
 // ingredients should be an array of strings
-export function get_recipes(ingredients) {
-    let url = `${base_url}get_recipes?ingredients=`;
+export function get_recipes(ingredients, page) {
+    let url = `${base_url}get_recipes?page=${page}&ingredients=`;
     ingredients.forEach(element => {
         url += element + ','
     });
