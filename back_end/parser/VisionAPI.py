@@ -5,23 +5,29 @@ import os
 from google.cloud import vision
 from google.cloud.vision import types
 
-def run_quickstart(img_to_parse):
+def run_quickstart(img_to_parse=None):
     # Instantiates a client
     client = vision.ImageAnnotatorClient()
 
-    # The name of the image file to annotate
-    file_name = 'C:\\Users\\tonoc\\Pictures\\pizza.jpg'
+    # --- UNCOMMENT THESE LINES OF CODE AND USE A CUSTOM PATH FOR IMAGE FOR DEBUGGING PURPOSES ---
+    # # The name of the image file to annotate
+    # file_name = 'C:\\Users\\tonoc\\Pictures\\pizza.jpg'
 
-    # Loads the image into memory
-    with io.open(file_name, 'rb') as image_file:
-        content = image_file.read()
+    # # Loads the image into memory
+    # with io.open(file_name, 'rb') as image_file:
+    #     content = image_file.read()
 
-    image = types.Image(content=content)
+    if img_to_parse is not None:
+        image = types.Image(content=img_to_parse)
 
-    # Performs label detection on the image file
-    response = client.label_detection(image=image)
-    labels = response.label_annotations
+        # Performs label detection on the image file
+        response = client.label_detection(image=image)
+        labels = response.label_annotations
+    else:
+        labels = []
 
-    print('Labels:')
+    label_descriptions = []
     for label in labels:
-        print(label.description)
+        label_descriptions.append(label.description)
+
+    return label_descriptions
