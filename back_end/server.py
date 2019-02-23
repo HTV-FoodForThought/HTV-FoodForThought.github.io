@@ -24,10 +24,14 @@ def upload_photo():
 
 @app.route('/get_recipies', methods=['POST'])
 def get_recipes():
-    list_of_ingredients = request.data
-    # make request to recipe end point
+    list_of_ingredients = request.args.get('ingredients')
+    page = request.args.get('page')
+    # ensure valid page
+    if int(page) <= 0:
+        page = '1'
+    recipes = VisionAPI.query_food_item_choices(list_of_ingredients, page)
     return jsonify(
-        response='',
+        response=recipes,
         status=200,
         mimetype='application/json'
     )
