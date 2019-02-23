@@ -3,6 +3,9 @@ import './Search.css';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import placeholder from './resources/placeholder.jpg'
+import LoadingOverlay from 'react-loading-overlay';
+import { upload_photo } from './backend/backendRequests.js';
+import { ListItem } from '@material-ui/core';
 
 class Search extends Component {
     constructor(props) {
@@ -12,7 +15,8 @@ class Search extends Component {
             loadingImage: false,
             selectedImage: placeholder,
             imageFile: null,
-            ingredients: [],
+            currImageIngredients: [],
+            selectedIngredients: [],
         };
     }
 
@@ -39,15 +43,14 @@ class Search extends Component {
                 </div>
             );
         } else if (this.state.loadingImage) {
-            return(
-                <div>
-                    {/*freeze the screen with loading indicator, replace image*/}
-                </div>
-            )
+            return (
+                <LoadingOverlay active={this.state.loadingImage} spinner text='Loading your content...'>
+                </LoadingOverlay>
+            );
         } else if (this.state.selectedImage) {
             return (
                 <div>
-                    {/*show everything, determine if button shows based on # of ingredients*/}
+                    {this.state.currImageIngredients}
                 </div>
             )
         }
@@ -55,13 +58,28 @@ class Search extends Component {
 
     /*With reference to https://codepen.io/hartzis/pen/VvNGZP*/
     handleFile(e) {
+        e.preventDefault();
         let r = new FileReader();
         let file = e.target.files[0];
-        this.setState({firstLoad: false, loadingImage: true});
+        this.setState({...this.state, firstLoad: false, loadingImage: true});
         r.onloadend = () => {
-            this.setState({selectedImage: r.result, imageFile: file});
+            this.setState({...this.state, selectedImage: r.result, imageFile: file});
         }
         r.readAsDataURL(file);
+        upload_photo(file).then((responseJson) => {
+            let copy = [];
+            responseJson.data.response.forEach(element => {
+                copy.push(
+                    <ListItem button>
+                        <p>{element}</p>
+                    </ListItem>
+                )
+            });
+            this.setState({...this.state, currImageIngredients: copy.concat(responseJson.response)});
+            this.setState({...this.state, loadingImage: false});
+        }) .catch((error) => {
+            console.log(error);
+        });
     }
 }
 export default Search

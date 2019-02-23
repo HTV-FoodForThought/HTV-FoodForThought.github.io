@@ -10,7 +10,7 @@ class Title extends Component {
                 <div className="title-header">
                     <h1>Food for Thought</h1>
                     {/*image from https://nypost.com/2018/04/04/youre-likely-eating-tiny-chunks-of-plastic-in-home-cooked-meals/*/}
-                    <img src={title} alt="Tasty food being cooked."/>
+                    <img src={title} alt="Tasty food being cooked." className="title-image"/>
                 <Link to="/search">Begin</Link>
                 </div>
             </div>
