@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './Search.css';
-import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import placeholder from './resources/placeholder.jpg'
 import LoadingOverlay from 'react-loading-overlay';
@@ -21,39 +20,25 @@ class Search extends Component {
     }
 
     render() {
-
-        const myLink = props => <Link exact to={{
-            pathname: "/recipes",
-            state: {
-                ingredients: ['chicken']
-            }
-        }}>Find recipes</Link>;
-  
-        if(this.state.firstLoad) {
+        if(this.state.loadingImage) {
             return(
-                <div>
-                    <h1>Add an Ingredient</h1> 
-                    <input type="file" onChange ={(e) => this.handleFile(e)}></input>
-                    {/*https://countrylakesdental.com/wp-content/uploads/2016/10/orionthemes-placeholder-image.jpg*/}
-                    <img src= {this.state.selectedImage} alt="Uploaded Ingredient" className="ingredientImage"></img>
-                    {/*title + upload + placeholder image*/}
-                    <Button component={myLink} variant="contained">
-                        Get Recipes
-                    </Button>
-                </div>
-            );
-        } else if (this.state.loadingImage) {
-            return (
                 <LoadingOverlay active={this.state.loadingImage} spinner text='Loading your content...'>
                 </LoadingOverlay>
             );
-        } else if (this.state.selectedImage) {
-            return (
-                <div>
-                    {this.state.currImageIngredients}
-                </div>
-            )
         }
+        return(
+            <div>
+                <h1>Add an Ingredient</h1> 
+                <input type="file" onChange ={(e) => this.handleFile(e)}></input>
+                {/*https://countrylakesdental.com/wp-content/uploads/2016/10/orionthemes-placeholder-image.jpg*/}
+                <img src= {this.state.selectedImage} alt="Uploaded Ingredient" className="ingredientImage"></img>
+                {/*title + upload + placeholder image*/}
+                {this.state.currImageIngredients}
+                <p>Selected Ingredients:</p>
+                {this.state.selectedIngredients}
+                <Link to="/recipes" state={{ingredients: this.selectedIngredients}}>Find Recipes</Link>
+            </div>
+        );
     }
 
     /*With reference to https://codepen.io/hartzis/pen/VvNGZP*/
@@ -65,16 +50,12 @@ class Search extends Component {
         r.onloadend = () => {
             this.setState({...this.state, selectedImage: r.result, imageFile: file});
         }
-        // r.readAsDataURL(file);
-        console.log(file);
-        console.log(file.type)
+        r.readAsDataURL(file);
         upload_photo(file).then((responseJson) => {
-            console.log(responseJson);
             let copy = [];
             responseJson.data.response.forEach(element => {
-                console.log(element);
                 copy.push(
-                    <ListItem button>
+                    <ListItem button onClick={this.addIngredient.bind(this,element)}>
                         <p>{element}</p>
                     </ListItem>
                 )
@@ -83,6 +64,12 @@ class Search extends Component {
         }) .catch((error) => {
             console.log(error);
         });
+    }
+
+    addIngredient(element) {
+        let copy = [...this.state.selectedIngredients]
+        copy.push(element)
+        this.setState({...this.state, selectedIngredients: copy})
     }
 }
 export default Search
