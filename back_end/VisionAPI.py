@@ -5,7 +5,13 @@ import os
 from google.cloud import vision
 from google.cloud.vision import types
 
-def run_quickstart(img_to_parse=None):
+def retrieve_labels(img_to_parse=None):
+    """
+    (image file in bytes) -> List[string]
+
+    Given an image file in bytes, return a list of food items represented as
+    strings
+    """
     # Instantiates a client
     client = vision.ImageAnnotatorClient()
 
