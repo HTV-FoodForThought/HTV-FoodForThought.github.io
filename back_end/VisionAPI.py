@@ -67,17 +67,21 @@ def query_food_item_choices(food_items, page=None):
     Given a string of food items delimited by commas and a page number, return
     a list of dictionaries where the keys are food properties and their values
     are...their values
-    """
+    """ 
     if page is not None:
         recipe_puppy_url = 'http://www.recipepuppy.com/api/?i=' + food_items + '&p=' + page
     else:
         recipe_puppy_url = 'http://www.recipepuppy.com/api/?i=' + food_items
 
     # Extract the JSON data from the page and return the results desired
-    page_form = urllib.request.urlopen(recipe_puppy_url).read()
-    data = json.loads(page_form.decode())
-
-    return data["results"]
+    try:
+        page_form = urllib.request.urlopen(recipe_puppy_url).read()
+        data = json.loads(page_form.decode())
+        return data["results"]
+    except ConnectionError:
+        print("[ERROR] : There was a problem connecting to the website API")
+    except TimeoutError:
+        print("[ERROR] : Website API took too long to respond")
 
 # if __name__=="__main__":
 #     print(query_food_item_choices("apple,orange", "1"))
