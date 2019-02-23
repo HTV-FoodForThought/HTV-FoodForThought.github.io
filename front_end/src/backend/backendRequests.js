@@ -1,19 +1,19 @@
 import axios from 'axios';
+import FormData from 'form-data';
 
 const base_url = 'http://localhost:5000/'
 
 export function upload_photo(image) {
-    console.log(image.type);;
-    console.log(image);
+    // https://stackoverflow.com/questions/39663961/how-do-you-send-images-to-node-js-with-axios
+    let data = new FormData();
+    data.append('image', image, image.fileName);
     return axios({
         headers: {
-            'Content-Type': image.type
+            'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
         },
         method: 'post',
         url: `${base_url}upload_photo`,
-        data: {
-            'image': image
-        }
+        data: data
     });
 }
 

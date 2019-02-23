@@ -15,15 +15,10 @@ def home():
 
 @app.route('/upload_photo', methods=['POST'])
 def upload_photo():
-    print(1)
     # print(request.files.get['image'])
     img = request.files.get('image')
-    print(request.data)
-    print(2)
-    print(type(img))
     # send img to google api and get results
-    options = VisionAPI.retrieve_labels_and_detect_food(img)
-    print(3)
+    options = VisionAPI.retrieve_labels(img)
     return jsonify(
         response=options,
         status=200,
