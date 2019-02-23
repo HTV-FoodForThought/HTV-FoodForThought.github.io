@@ -16,9 +16,6 @@ class Search extends Component {
             <div className="search">
                 <h1>Add an Ingredient</h1>
                 <input type="file"/>
-                <button onClick={this.handleClick()}>
-                    Browse
-                </button>
             </div>
         );
     }
