@@ -1,5 +1,7 @@
 import io
 import os
+import urllib.request
+import json
 
 # Imports the Google Cloud client library
 from google.cloud import vision
@@ -24,8 +26,10 @@ def retrieve_labels(img_to_parse=None):
     #     content = image_file.read()
 
     if img_to_parse is not None:
+        image = types.Image(content=img_to_parse)
+
         # Performs label detection on the image file
-        response = client.label_detection(image=img_to_parse)
+        response = client.label_detection(image=image)
         labels = response.label_annotations
     else:
         labels = []
@@ -35,3 +39,28 @@ def retrieve_labels(img_to_parse=None):
         label_descriptions.append(label.description)
 
     return label_descriptions
+
+def query_food_item_choices(food_items, page):
+    """
+    (List[string], string) -> List[{string: string, ...:...}*10]
+
+    Given a list of food items represented as a list of strings and a page number, return
+    a list of dictionaries where the keys are food properties and their values are...their values
+    """
+    recipe_puppy_url = 'http://www.recipepuppy.com/api/?i='
+
+    # Iterate through each food item and append it to the url that we will use to
+    # run our query on the food recipes
+    for food in food_items:
+        recipe_puppy_url += food
+        if not food_items.index(food) == len(food_items) - 1:
+            recipe_puppy_url += '&p=' + page
+    
+    # Extract the JSON data from the page and return the results desired
+    page_form = urllib.request.urlopen(recipe_puppy_url).read()
+    data = json.loads(page_form.decode())
+
+    return data["results"]
+
+# if __name__=="__main__":
+#     query_food_item_choices(["apple", "orange"])

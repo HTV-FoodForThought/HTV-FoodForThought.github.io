@@ -15,7 +15,7 @@ def home():
 def upload_photo():
     img = request.files['image']
     # send img to google api and get results
-    options = VisionAPI.run_quickstart(img)
+    options = VisionAPI.retrieve_labels(img)
     return jsonify(
         response=options,
         status=200,
@@ -23,7 +23,7 @@ def upload_photo():
     )
 
 @app.route('/get_recipies', methods=['POST'])
-def get_recipies():
+def get_recipes():
     list_of_ingredients = request.data
     # make request to recipe end point
     return jsonify(
