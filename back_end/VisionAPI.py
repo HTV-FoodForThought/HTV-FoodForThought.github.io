@@ -24,10 +24,8 @@ def retrieve_labels(img_to_parse=None):
     #     content = image_file.read()
 
     if img_to_parse is not None:
-        image = types.Image(content=img_to_parse)
-
         # Performs label detection on the image file
-        response = client.label_detection(image=image)
+        response = client.label_detection(image=img_to_parse)
         labels = response.label_annotations
     else:
         labels = []
