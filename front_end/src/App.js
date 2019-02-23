@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Link, Route } from 'react-router-dom'
 import './App.css';
 import Search from './Search.js';
 import title from './resources/title-image.jpg';
+import Switch from 'react-router-dom/Switch';
+import Route from 'react-router-dom/Route';
 
 class App extends Component {
   render() {
