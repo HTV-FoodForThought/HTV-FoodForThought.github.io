@@ -1,6 +1,6 @@
 import io
 import os
-import urllib.request
+import urllib2
 import json
 
 # Imports the Google Cloud client library
@@ -73,9 +73,9 @@ def query_food_item_choices(food_items, page=None):
     else:
         recipe_puppy_url = 'http://www.recipepuppy.com/api/?i=' + food_items
 
-    # Extract the JSON data from the page and return the results desired
     try:
-        page_form = urllib.request.urlopen(recipe_puppy_url).read()
+        # Extract the JSON data from the page and return the results desired
+        page_form = urllib2.Request.urlopen(recipe_puppy_url).read()
         data = json.loads(page_form.decode())
         return data["results"]
     except ConnectionError:
