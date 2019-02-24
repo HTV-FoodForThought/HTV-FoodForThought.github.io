@@ -75,13 +75,11 @@ def query_food_item_choices(food_items, page=None):
 
     try:
         # Extract the JSON data from the page and return the results desired
-        page_form = urllib2.Request.urlopen(recipe_puppy_url).read()
+        page_form = urllib2.urlopen(recipe_puppy_url).read()
         data = json.loads(page_form.decode())
         return data["results"]
-    except ConnectionError:
+    except urllib2.HTTPError:
         print("[ERROR] : There was a problem connecting to the website API")
-    except TimeoutError:
-        print("[ERROR] : Website API took too long to respond")
 
 # if __name__=="__main__":
 #     print(query_food_item_choices("apple,orange", "1"))
