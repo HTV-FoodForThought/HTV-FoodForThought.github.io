@@ -10,7 +10,7 @@
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #ffffff;
 }
 
 .title-image {
@@ -19,4 +19,18 @@
   height: 75%;
   padding-top: 5px;
   padding-bottom: 10px;
+  border: #ffffff 2px solid;
 }
+
+.title-btn {
+  border: #ffffff 4px solid;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: #ffffff;
+}
+
+#h3 {
+  font-style: italic;
+  padding-top: 10px;
+}
+
