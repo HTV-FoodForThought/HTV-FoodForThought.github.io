@@ -2,17 +2,19 @@
     position: relative;
     padding: 10px;
     width: 50%;
-    height: 50%;
 }
 
- .selectFile {
+.selectFile {
     margin-left: auto;
     margin-right: auto;
     display: block;
-    color: transparent;
-    padding-left: 290px;
     padding-top: 10px;
- }
+}
+
+.recipeLink {
+    display: block;
+    padding-top: 10px;
+}
 
  .recipeLink {
      display: block;
@@ -22,3 +24,8 @@
      border-radius: 5px;
      color: #ffffff;
  }
+
+.selected-ingredient {
+    text-align: center;
+    width: 100%;
+}

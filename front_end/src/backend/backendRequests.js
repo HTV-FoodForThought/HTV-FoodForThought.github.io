@@ -1,7 +1,7 @@
 import axios from 'axios';
 import FormData from 'form-data';
 
-const base_url = 'http://localhost:5000/'
+const base_url = 'https://foodforthought-232608.appspot.com/'
 
 export function upload_photo(image) {
     // https://stackoverflow.com/questions/39663961/how-do-you-send-images-to-node-js-with-axios
