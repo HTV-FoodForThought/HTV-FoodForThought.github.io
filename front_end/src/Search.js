@@ -5,6 +5,7 @@ import placeholder from './resources/placeholder.jpg'
 import LoadingOverlay from 'react-loading-overlay';
 import { upload_photo } from './backend/backendRequests.js';
 import { ListItem } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 
 class Search extends Component {
     constructor(props) {
@@ -16,6 +17,7 @@ class Search extends Component {
             imageFile: null,
             currImageIngredients: [],
             selectedIngredients: [],
+            ingredientList: [],
         };
     }
 
@@ -35,7 +37,7 @@ class Search extends Component {
                 {/*title + upload + placeholder image*/}
                 {this.state.currImageIngredients}
                 <p>Selected Ingredients:</p>
-                {this.state.selectedIngredients}
+                {this.state.ingredientList}
                 <Link exact to={{
                     pathname: "/recipes",
                     state: {
@@ -72,12 +74,24 @@ class Search extends Component {
     }
 
     addIngredient(element) {
-        if (this.state.selectedIngredients.includes(element)) {
-            return;
+        if (!this.state.selectedIngredients.includes(element)) {
+            let copy = [...this.state.selectedIngredients];
+            copy.push(element);
+            let copyTwo = [...this.state.ingredientList];
+            copyTwo.push(<ListItem button onClick={this.removeIngredient.bind(this,element)}>
+                        <p>{element}</p>
+                        </ListItem>)
+            this.setState({...this.state, selectedIngredients: copy, ingredientList: copyTwo});
         }
+    }
+
+    removeIngredient(element) {
         let copy = [...this.state.selectedIngredients];
-        copy.push(element);
-        this.setState({...this.state, selectedIngredients: copy});
+        let copyTwo = [...this.state.ingredientList];
+        var index = copy.indexOf(element);
+        copy.splice(index, 1);
+        copyTwo.splice(index, 1);
+        this.setState({...this.state, selectedIngredients: copy, ingredientList: copyTwo});
     }
 }
 export default Search
