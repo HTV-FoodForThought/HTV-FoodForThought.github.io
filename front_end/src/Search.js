@@ -29,20 +29,19 @@ class Search extends Component {
         return(
             <div>
                 <h1>Add an Ingredient</h1> 
-                <input type="file" onChange ={(e) => this.handleFile(e)}></input>
+                <input type="file" onChange ={(e) => this.handleFile(e)} className = "selectFile"></input>
                 {/*https://countrylakesdental.com/wp-content/uploads/2016/10/orionthemes-placeholder-image.jpg*/}
                 <img src= {this.state.selectedImage} alt="Uploaded Ingredient" className="ingredientImage"></img>
                 {/*title + upload + placeholder image*/}
                 {this.state.currImageIngredients}
                 <p>Selected Ingredients:</p>
                 {this.state.selectedIngredients}
-                {console.log(this.state.selectedIngredients)}
                 <Link exact to={{
                     pathname: "/recipes",
                     state: {
                         ingredients: this.state.selectedIngredients
                     }
-                }}>Find recipes</Link>;
+                }} className="recipeLink">Find recipes</Link>
             </div>
         );
     }

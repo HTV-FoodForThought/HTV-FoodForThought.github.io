@@ -80,13 +80,16 @@ export default class RecipesPage extends Component {
         const loader = <div className="loader">Loading ...</div>;
 
         return(
-            <InfiniteScroll
-                pageStart={1}
-                loadMore={this.getItems}
-                loader={loader}
-                hasMore={this.state.has_more_recipes}>
-                {this.state.recipes}
-            </InfiniteScroll>
+            <div>
+                <h1>Recipes</h1>
+                <InfiniteScroll
+                    pageStart={1}
+                    loadMore={this.getItems}
+                    loader={loader}
+                    hasMore={this.state.has_more_recipes}>
+                    {this.state.recipes}
+                </InfiniteScroll>
+            </div>
         )
     }
 }
