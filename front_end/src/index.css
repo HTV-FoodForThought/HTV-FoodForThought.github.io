@@ -4,6 +4,10 @@ body {
   font-family: 'Pacifico', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url("./resources/bg.jpeg");
+  opacity: 0.8;
+  background-repeat: no-repeat;
+  background-size:cover;
 }
 
 code {
