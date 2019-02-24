@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import placeholder from './resources/placeholder.jpg'
 import LoadingOverlay from 'react-loading-overlay';
 import { upload_photo } from './backend/backendRequests.js';
-import { ListItem } from '@material-ui/core';
-import { Button } from '@material-ui/core';
+import { ListItem, Grid, IconButton, Chip } from '@material-ui/core';
 
 class Search extends Component {
     constructor(props) {
@@ -22,29 +21,33 @@ class Search extends Component {
     }
 
     render() {
-        if(this.state.loadingImage) {
-            return(
-                <LoadingOverlay active={this.state.loadingImage} spinner text='Loading your content...'>
-                </LoadingOverlay>
-            );
-        }
         return(
-            <div>
-                <h1>Add an Ingredient</h1> 
-                <input type="file" onChange ={(e) => this.handleFile(e)} className = "selectFile"></input>
-                {/*https://countrylakesdental.com/wp-content/uploads/2016/10/orionthemes-placeholder-image.jpg*/}
-                <img src= {this.state.selectedImage} alt="Uploaded Ingredient" className="ingredientImage"></img>
+            <Grid container>
+                <Grid item xs={12}><h1>Add an Ingredient</h1></Grid>
+                <Grid container item xs={12} lg={8}>
+                    {/*https://countrylakesdental.com/wp-content/uploads/2016/10/orionthemes-placeholder-image.jpg*/}
+                    <Grid item xs={12}><img src= {this.state.selectedImage} alt="Uploaded Ingredient" className="ingredientImage"/></Grid>                    
+                    <Grid item xs={12}><input type="file" onChange ={(e) => this.handleFile(e)} className = "selectFile"/></Grid> 
+                </Grid> 
+
                 {/*title + upload + placeholder image*/}
-                {this.state.currImageIngredients}
-                <p>Selected Ingredients:</p>
+                <Grid container item xs={12} lg={4} >
+                    <Grid item xs={12}><p>Select Matching Ingredient:</p></Grid>
+                    {this.state.loadingImage ? 
+                        <LoadingOverlay active={this.state.loadingImage} spinner text='Loading your content...' className='centerInPage'/>
+                        : this.state.currImageIngredients}
+                </Grid>
+                <Grid item xs={12}><p>Selected Ingredients:</p></Grid>
                 {this.state.ingredientList}
+                <Grid item xs={12}>
                 <Link exact to={{
                     pathname: "/recipes",
                     state: {
                         ingredients: this.state.selectedIngredients
                     }
                 }} className="recipeLink">Find recipes</Link>
-            </div>
+                </Grid>
+            </Grid>
         );
     }
 
@@ -62,9 +65,11 @@ class Search extends Component {
             let copy = [];
             responseJson.data.response.forEach(element => {
                 copy.push(
-                    <ListItem button onClick={this.addIngredient.bind(this,element)}>
-                        <p>{element}</p>
-                    </ListItem>
+                    <Grid item xs={6} sm={4} m={3} lg={6}>
+                        <ListItem button onClick={this.addIngredient.bind(this,element)}>
+                            {element}
+                        </ListItem>
+                    </Grid>
                 )
             });
             this.setState({...this.state, currImageIngredients: copy, loadingImage: false});
@@ -78,9 +83,10 @@ class Search extends Component {
             let copy = [...this.state.selectedIngredients];
             copy.push(element);
             let copyTwo = [...this.state.ingredientList];
-            copyTwo.push(<ListItem button onClick={this.removeIngredient.bind(this,element)}>
-                        <p>{element}</p>
-                        </ListItem>)
+            copyTwo.push(
+                        <Grid item xs={6} sm={4} m={3} lg={2}>
+                            <Chip label={element} onDelete={() => this.removeIngredient(element)} style={{padding: '15px'}}/>
+                        </Grid>)
             this.setState({...this.state, selectedIngredients: copy, ingredientList: copyTwo});
         }
     }

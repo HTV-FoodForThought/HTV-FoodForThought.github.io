@@ -1,0 +1,16 @@
+.centerInPage {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.card {
+    width: 100%;
+    border-style: none;
+}
+
+.cardGrid {
+    margin: 15px !important;
+}

@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { get_recipes } from './backend/backendRequests';
-import { ListItem } from '@material-ui/core';
+import { Card, CardContent, Grid } from '@material-ui/core';
 import InfiniteScroll from 'react-infinite-scroller';
+import LoadingOverlay from 'react-loading-overlay';
+import './RecipesPage.css';
 
 
 export default class RecipesPage extends Component {
@@ -30,13 +32,24 @@ export default class RecipesPage extends Component {
                 // turn response into list elements
                 responseJson.data.response.forEach(element => {
                     copy.push(
-                        <ListItem button>
-                            <a href={element.href} target='_blank'>
-                                <p>{element.title}</p>
-                                <img src={element.thumbnail}/>
-                                <p>Ingredients: {element.ingredients}</p>
-                            </a>
-                        </ListItem>        
+                        <Grid item xs={12} className='cardGrid'>
+                            <Card>
+                                <CardContent>
+                                    <a href={element.href} target='_blank' className='card'>
+                                    <Grid container xs={12}>
+
+                                        <Grid item xs={4}>{element.title}</Grid>
+                                            <Grid item xs={4}><img src={element.thumbnail}/></Grid>
+                                        <Grid item xs={4}><p>Ingredients: {element.ingredients}</p></Grid>
+                                        </Grid>
+                        
+                                    </a>
+                                </CardContent>
+
+                            </Card>
+                        </Grid>
+
+
                     )
                 });
                 // if no new items, set that
@@ -66,22 +79,23 @@ export default class RecipesPage extends Component {
     render() {
         if (this.state.loading) {
             return(
-                <div>
-                    LOADING...
+                <div className='centerInPage'>
+                    <LoadingOverlay active={this.state.loading} spinner text='Loading recipes...'/>
                 </div>
             )
         } else if (this.state.error) {
             return(
-                <div>
+                <div className='centerInPage'>
                     ERROR...
                 </div>
             )
         }
-        const loader = <div className="loader">Loading ...</div>;
+        const loader = <LoadingOverlay active={true} spinner text='Loading recipes...'/>;
 
         return(
-            <div>
-                <h1>Recipes</h1>
+            <Grid container xs={12} justify='center'>
+                <Grid item xs={12}><h1>Recipes</h1></Grid>
+                <Grid item xs={10} m={8} alignContent='center'>
                 <InfiniteScroll
                     pageStart={1}
                     loadMore={this.getItems}
@@ -89,7 +103,9 @@ export default class RecipesPage extends Component {
                     hasMore={this.state.has_more_recipes}>
                     {this.state.recipes}
                 </InfiniteScroll>
-            </div>
+                </Grid>
+
+            </Grid>
         )
     }
 }
