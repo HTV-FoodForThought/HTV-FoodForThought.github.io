@@ -16,7 +16,7 @@ class Title extends Component {
                     <Fade><h1>Food for Thought</h1></Fade>
                     {/*image from https://nypost.com/2018/04/04/youre-likely-eating-tiny-chunks-of-plastic-in-home-cooked-meals/*/}
                     <Fade><img src={title} alt="Tasty food being cooked." className="title-image"/></Fade>
-                    <LightSpeed left><h4>You have the ingredients, we got the dishes</h4></LightSpeed>
+                    <LightSpeed left><h4>You have the ingredients, we've got the dishes</h4></LightSpeed>
                     <Link className="title-btn" to="/search">Begin</Link>
                 </div>
             </div>
