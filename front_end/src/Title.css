@@ -1,5 +1,6 @@
 .title {
   text-align: center;
+  background: rgba(40,44,52,0.001)
 }
 
 .thot-image {
@@ -9,7 +10,6 @@
 }
 
 .title-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -40,9 +40,5 @@
   font-style: italic;
   padding-top: 200px;
   padding-bottom: 200px;
-}
-
-.center {
-  text-align: center;
 }
 

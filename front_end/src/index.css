@@ -14,7 +14,6 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: url("./resources/bg.jpeg") no-repeat center center fixed;
-  opacity: 0.8;
 }
 
 a, a:hover {
