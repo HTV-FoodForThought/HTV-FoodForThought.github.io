@@ -5,4 +5,3 @@ Built for Hack the Valley III. (Feb 22-24) Built using React, Flask, Google Visi
 
 
 
-Visit [pbj-foodforthought.com](https://pbj-foodforthought.com) to test it out!
